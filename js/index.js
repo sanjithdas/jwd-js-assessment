@@ -88,7 +88,7 @@ window.addEventListener('DOMContentLoaded', () => {
       document.querySelector('#quizWrap').style.display="none";
       document.getElementById("total").style.display = "block"
       document.getElementById("total").innerHTML=
-      `<p class="text text-sucess text-center "><div class="scored">Total Scored: ${score}</div></p>`;
+      `<p class="text text-sucess text-center "><div class="scored">Total Scored: ${score}/${quizArray.length}</div></p>`;
       btnSubmit.style.display ="none";
       btnReset.style.display = "none";
       document.querySelector('.txt_label').style.display = "none"
