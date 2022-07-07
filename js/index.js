@@ -184,7 +184,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   function showQuestionsAndCorrectAnswers(){
     document.getElementById("display_correct").style.display="block";
-    let strDivQn = `Correct Answers: <br><br>`;
+    let strDivQn = `Correct Answers: <br><br><br>`;
     quizArray.forEach((qns)=>{
       console.log(qns.q, qns.a );
       strDivQn += `<p class="alert alert-success ">${qns.q} <span class="bg-success font-weight-bold"> ${qns.o[qns.a]}</span></p>`
