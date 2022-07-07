@@ -14,26 +14,39 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="./css/styles.css">
     <title>Quiz</title>
   </head>
   <body>
+    <div class="total">
+      <div  id="total"></div>
+      <div class="display_correct" id="display_correct">
+        
+      </div>
+    </div>
+    <input type="hidden" name="counter" id="counter">
     <div class="container m-5" id="start">
       <div class="card" style="width: 18rem">
         <div class="card-body">
           <h5 class="card-title">Test your knowledge</h5>
-          <p class="card-text">Some quick description about the quiz .</p>
-          <a class="btn btn-primary">Start</a>
+          <!-- <p class="card-text">Some quick description about the quiz .</p> -->
+          <a class="btn btn-primary" id="btn_go">Start</a>
         </div>
       </div>
     </div>
-
+    
     <!-- (B) QUIZ CONTAINER -->
     <div class="container" id="quizBlock" style="display: none">
       <div class="mb-5">
-        <h2>Test your knowledge</h2>
-        - Time remaining <span id="time">01:00</span>
+        <h2 class="txt_label">Test your knowledge</h2>
+        <span class="time_remining"></span> <span id="time"></span>
       </div>
-      <div id="quizWrap"></div>
+
+      
+
+      <div id="quizWrap">
+
+      </div>
 
       <div>
         <button type="button" class="btn btn-primary" id="btnSubmit">

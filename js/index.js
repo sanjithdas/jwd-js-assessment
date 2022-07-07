@@ -19,15 +19,35 @@
       5. Add a countdown timer - when the time is up, end the quiz, display the score and highlight the correct answers
 *************************** */
 
+// submit and reset butten element by id
+
+ const btnSubmit = document.getElementById("btnSubmit");
+ const btnReset = document.getElementById("btnReset") ;
+
+
+// DOM loaded event
 window.addEventListener('DOMContentLoaded', () => {
+
   const start = document.querySelector('#start');
   start.addEventListener('click', function (e) {
     document.querySelector('#quizBlock').style.display = 'block';
     start.style.display = 'none';
   });
+
+  // submit button event listener
+  btnSubmit.addEventListener('click',()=>{
+    calculateScore();
+  })
+
+  // reset button event - called resetQuiz method
+  btnReset.addEventListener('click',()=>{
+    resetQuiz();
+  })
+
   // quizArray QUESTIONS & ANSWERS
   // q = QUESTION, o = OPTIONS, a = CORRECT ANSWER
   // Basic ideas from https://code-boxx.com/simple-javascript-quiz/
+
   const quizArray = [
     {
       q: 'Which is the third planet from the sun?',
@@ -44,8 +64,43 @@ window.addEventListener('DOMContentLoaded', () => {
       o: ['Sydney', 'Canberra', 'Melbourne', 'Perth'],
       a: 1,
     },
+    {
+      q: 'www stands for ',
+      o: ['wide world web', 'world web wide', 'Web world wide web', 'world wide web'],
+      a: 3,
+    },
+    {
+      q: 'What is HTTP stands for',
+      o: ['Hyper Transfer Protocol', 'Hypertext Transfer Protocol', 'Hyper Text Text Protocol', 'Hypertext Trans Protocol'],
+      a: 1,
+    },
   ];
 
+  // initialise the cont -  5 seconds for each question
+  let count = Math.floor(quizArray.length * 1) * quizArray.length ;
+  
+  let interval = setInterval(function(){
+    document.getElementById('time').innerHTML=`Time Remining: ${count} s`;
+    count--;
+    if (count === 0){
+      clearInterval(interval);
+      document.getElementById('time').innerHTML='';
+      document.querySelector('#quizWrap').style.display="none";
+      document.getElementById("total").style.display = "block"
+      document.getElementById("total").innerHTML=
+      `<p class="text text-sucess text-center "><div class="scored">Total Scored: ${score}</div></p>`;
+      btnSubmit.style.display ="none";
+      btnReset.style.display = "none";
+      document.querySelector('.txt_label').style.display = "none"
+      showQuestionsAndCorrectAnswers();
+    
+    }
+    // adding counter value to a hidden field  
+    document.getElementById("counter").value=count;
+     
+   }, 1000);
+
+   
   // function to Display the quiz questions and answers from the object
   const displayQuiz = () => {
     const quizWrap = document.querySelector('#quizWrap');
@@ -64,27 +119,79 @@ window.addEventListener('DOMContentLoaded', () => {
   };
 
   // Calculate the score
+  let score =0;
   const calculateScore = () => {
-    let score = 0;
+    score =0;
+    
     quizArray.map((quizItem, index) => {
+    
       for (let i = 0; i < 4; i++) {
         //highlight the li if it is the correct answer
         let li = `li_${index}_${i}`;
         let r = `radio_${index}_${i}`;
         liElement = document.querySelector('#' + li);
         radioElement = document.querySelector('#' + r);
-
-        if (quizItem.a == i) {
-          //change background color of li element here
-        }
+        liElement.style.backgroundColor="";
 
         if (radioElement.checked) {
           // code for task 1 goes here
+          
+          if (quizItem.a == i) {
+            //change background color of li element here
+            score = score + 1;
+           liElement.style.backgroundColor="green";
+          }
+          else{
+            
+            liElement.style.backgroundColor="red";
+          }
+         
         }
       }
     });
+        
+    if (parseInt(document.getElementById("counter").value)==0)
+        btnSubmit.disabled=true;
+         
   };
 
   // call the displayQuiz function
   displayQuiz();
+
+  // reset the selection
+
+  function resetQuiz(){
+    count = Math.floor(quizArray.length * 1) * quizArray.length
+    quizArray.map((quizItem, index) => {
+     
+       for (let i = 0; i < 4; i++) {
+         //highlight the li if it is the correct answer
+         let li = `li_${index}_${i}`;
+         let r = `radio_${index}_${i}`;
+         liElement = document.querySelector('#' + li);
+         radioElement = document.querySelector('#' + r);
+          if (radioElement.checked) {
+           // code for task 1 goes here
+            radioElement.checked = false;
+            liElement.style.backgroundColor="";
+           // location.reload();
+         }
+       }
+     });
+  }
+
+  // display correct answers once the quiz is finished
+
+  function showQuestionsAndCorrectAnswers(){
+    document.getElementById("display_correct").style.display="block";
+    let strDivQn = `Correct Answers: <br><br>`;
+    quizArray.forEach((qns)=>{
+      console.log(qns.q, qns.a );
+      strDivQn += `<p class="alert alert-success ">${qns.q} <span class="bg-success font-weight-bold"> ${qns.o[qns.a]}</span></p>`
+    })
+    document.getElementById("display_correct").innerHTML = strDivQn;
+    document.getElementById("start").style.display="none";
+   }
+ //  
+ 
 });
