@@ -161,6 +161,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // reset the selection
 
   function resetQuiz(){
+    location.reload();
     count = Math.floor(quizArray.length * 1) * quizArray.length
     quizArray.map((quizItem, index) => {
      
@@ -174,7 +175,7 @@ window.addEventListener('DOMContentLoaded', () => {
            // code for task 1 goes here
             radioElement.checked = false;
             liElement.style.backgroundColor="";
-           // location.reload();
+           
          }
        }
      });
